@@ -1,3 +1,5 @@
+""" An edited version taken from: http://www.lengrand.fr/2011/11/simple-region-growing-implementation-in-python/ """
+
 import sys
 import argparse
 
@@ -94,6 +96,7 @@ def region_growing(img, seed, threshold):
 
 	return reg
 
+""" Gets the type of region segmentation from user """
 if __name__ == "__main__":
 	args = parse_arguments()
 	
@@ -105,8 +108,7 @@ if __name__ == "__main__":
 	img_grey = cv2.cvtColor(img_grey, cv2.cv.CV_BGR2GRAY)
 	thresh, _ = cv2.threshold(img_grey, 0, 255, cv2.cv.CV_THRESH_BINARY | cv2.cv.CV_THRESH_OTSU)
 	
-	types = {"region grow": region_growing(img, (456, 350), int(thresh)), 
-			"split and merge": None}
+	types = {"region grow": region_growing(img, (456, 350), int(thresh))}
 	
 	if (img is not None):
 		region = types[args["type"]]

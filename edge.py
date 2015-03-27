@@ -3,16 +3,18 @@ import argparse
 import cv2
 import numpy as np
 
-## Parse the arguments supplied
+""" Parses the arguments from the user """
 def parse_arguments():
 	args = argparse.ArgumentParser()
 	args.add_argument("-i", "--image", required=True, help="Path to image")
 	args.add_argument("-t", "--type", required=True, help="Type of edge segmentation")
 	return vars(args.parse_args())
 
+""" Performs the Canny edge detection """
 def canny(img):
 	return cv2.Canny(img, 100, 200)
 
+""" Applies the Prewitt kernels to the image """
 def prewitt(img):
 	kernel_x = np.array([[-1.0, 0.0, 1.0], [-1.0, 0.0, 1.0], [-1.0, 0.0, 1.0]])
 	kernel_y = np.array([[-1.0, -1.0, -1.0], [0.0, 0.0, 0.0], [1.0, 1.0, 1.0]])
@@ -22,6 +24,7 @@ def prewitt(img):
 
 	return prewitt_x + prewitt_y
 
+""" Applies the Robert kernels to the image """
 def roberts(img):
 	kernel_x = np.array([[1.0, 0.0], [0.0, -1.0]])
 	kernel_y = np.array([[0.0, 1.0], [-1.0, 0.0]])
@@ -31,9 +34,11 @@ def roberts(img):
 
 	return roberts_x + roberts_y
 
+""" Applies the Sobel kernels to the image """
 def sobel(img):
 	return cv2.Sobel(img, cv2.CV_8U, 1, 0, ksize=3)
 
+""" Frame average the image to reduce noise over 100 frames """
 def frame_average(img, num_frames, types, type_of_edge):	
 	avg = np.float32(img)
 	weight = float(1) / num_frames

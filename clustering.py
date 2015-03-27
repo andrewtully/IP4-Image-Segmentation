@@ -3,7 +3,7 @@ import argparse
 import cv2
 import numpy as np
 
-## Parse the arguments supplied
+""" Parse the arguments supplied """
 def parse_arguments():
 	args = argparse.ArgumentParser()
 	args.add_argument("-i", "--image", required=True, help="Path to image")
@@ -11,7 +11,7 @@ def parse_arguments():
 	return vars(args.parse_args())
 	
 	
-# K-means clustering for the number of cluster specified	
+""" K-means clustering for the number of clusters specified	"""
 def kmeans(img, K):
 	img = cv2.GaussianBlur(img, (7,7), 0)
 	
@@ -26,7 +26,7 @@ def kmeans(img, K):
 	segmented_img = res.reshape((img.shape))
 	return label.reshape((img.shape[0], img.shape[1])), segmented_img.astype(np.uint8)
 
-# Extract a particular cluster
+""" Extract a particular cluster """
 def extract_cluster(img, img_label, label):
 	component = np.zeros(img.shape, np.uint8)
 	component[img_label==label] = img[img_label==label]
